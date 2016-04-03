@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 03 Kwi 2016, 10:01
+-- Czas wygenerowania: 03 Kwi 2016, 12:58
 -- Wersja serwera: 5.5.47-0ubuntu0.14.04.1
 -- Wersja PHP: 5.5.9-1ubuntu4.14
 
@@ -61,7 +61,15 @@ CREATE TABLE IF NOT EXISTS `item` (
   `price` int(11) NOT NULL,
   PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_id` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Zrzut danych tabeli `item`
+--
+
+INSERT INTO `item` (`item_id`, `name`, `description`, `price`) VALUES
+(5, 'płatki śniadaniowe', 'wfdsd', 11),
+(6, 'czekolada', 'czasda ad sadsa dsad sa', 4);
 
 -- --------------------------------------------------------
 
@@ -70,11 +78,25 @@ CREATE TABLE IF NOT EXISTS `item` (
 --
 
 CREATE TABLE IF NOT EXISTS `item_photo` (
-  `item_id` smallint(5) NOT NULL,
+  `photo_id` smallint(5) NOT NULL AUTO_INCREMENT,
   `photo` varchar(250) NOT NULL,
+  `item_id` smallint(5) NOT NULL,
+  PRIMARY KEY (`photo_id`),
+  UNIQUE KEY `item_id_2` (`photo_id`),
+  KEY `item_id` (`photo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `oder_item`
+--
+
+CREATE TABLE IF NOT EXISTS `oder_item` (
+  `order_id` int(100) NOT NULL,
+  `item_id` smallint(5) NOT NULL,
   PRIMARY KEY (`item_id`),
-  UNIQUE KEY `item_id_2` (`item_id`),
-  KEY `item_id` (`item_id`)
+  KEY `order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -86,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `item_photo` (
 CREATE TABLE IF NOT EXISTS `order` (
   `order_id` int(100) NOT NULL AUTO_INCREMENT,
   `customer_id` smallint(5) NOT NULL,
-  `item_id` int(11) NOT NULL,
+  `item_id` smallint(5) NOT NULL,
   `status` set('oczekujące','złożone','opłacone','zrealizowane') NOT NULL DEFAULT '',
   `quantity` smallint(6) NOT NULL,
   `basket` set('oczekujące','zatwierdzone','','') NOT NULL,
@@ -112,10 +134,18 @@ ALTER TABLE `customer`
   ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `order` (`customer_id`);
 
 --
--- Ograniczenia dla tabeli `item`
+-- Ograniczenia dla tabeli `oder_item`
 --
-ALTER TABLE `item`
-  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item_photo` (`item_id`);
+ALTER TABLE `oder_item`
+  ADD CONSTRAINT `oder_item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
+  ADD CONSTRAINT `oder_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`);
+
+--
+-- Ograniczenia dla tabeli `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `oder_item` (`order_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
