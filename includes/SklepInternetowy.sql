@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 03 Kwi 2016, 13:48
+-- Czas wygenerowania: 03 Kwi 2016, 14:06
 -- Wersja serwera: 5.5.47-0ubuntu0.14.04.1
 -- Wersja PHP: 5.5.9-1ubuntu4.14
 
@@ -167,7 +167,6 @@ ALTER TABLE `oder_item`
 -- Ograniczenia dla tabeli `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
   ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
