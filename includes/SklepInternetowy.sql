@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 03 Kwi 2016, 12:58
+-- Czas wygenerowania: 03 Kwi 2016, 13:48
 -- Wersja serwera: 5.5.47-0ubuntu0.14.04.1
 -- Wersja PHP: 5.5.9-1ubuntu4.14
 
@@ -31,7 +31,14 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `email` varchar(50) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Zrzut danych tabeli `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `email`, `password`) VALUES
+(1, 'admin@op.pl', 'sadsadsadsadsadsadsadsadsaasadsadsadsadsadsadsad');
 
 -- --------------------------------------------------------
 
@@ -46,7 +53,14 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Zrzut danych tabeli `customer`
+--
+
+INSERT INTO `customer` (`customer_id`, `first_name`, `last_name`, `email`, `password`) VALUES
+(2, 'Wiesław', 'Gliński', 'wieslawglinski@op.pl', '123456789');
 
 -- --------------------------------------------------------
 
@@ -84,7 +98,15 @@ CREATE TABLE IF NOT EXISTS `item_photo` (
   PRIMARY KEY (`photo_id`),
   UNIQUE KEY `item_id_2` (`photo_id`),
   KEY `item_id` (`photo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Zrzut danych tabeli `item_photo`
+--
+
+INSERT INTO `item_photo` (`photo_id`, `photo`, `item_id`) VALUES
+(1, 'images/platkisniadaniowe.jpg', 5),
+(2, 'images/czekolada.jpg', 6);
 
 -- --------------------------------------------------------
 
@@ -121,31 +143,32 @@ CREATE TABLE IF NOT EXISTS `order` (
   KEY `item_id_2` (`item_id`),
   KEY `customer_id_5` (`customer_id`),
   KEY `item_id_3` (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Zrzut danych tabeli `order`
+--
+
+INSERT INTO `order` (`order_id`, `customer_id`, `item_id`, `status`, `quantity`, `basket`) VALUES
+(4, 2, 5, 'opłacone', 6, 'oczekujące');
 
 --
 -- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Ograniczenia dla tabeli `customer`
---
-ALTER TABLE `customer`
-  ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `order` (`customer_id`);
-
---
 -- Ograniczenia dla tabeli `oder_item`
 --
 ALTER TABLE `oder_item`
-  ADD CONSTRAINT `oder_item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
-  ADD CONSTRAINT `oder_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`);
+  ADD CONSTRAINT `oder_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`),
+  ADD CONSTRAINT `oder_item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`);
 
 --
 -- Ograniczenia dla tabeli `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
-  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `oder_item` (`order_id`);
+  ADD CONSTRAINT `order_ibfk_4` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
+  ADD CONSTRAINT `order_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
