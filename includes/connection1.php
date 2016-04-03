@@ -2,8 +2,8 @@
 
 
     $servername = "localhost";
-    $username = "root";
-    $password = "coderslab";
+    $username = " 'Sklep_User";
+    $password = " 'Sklep_User";
     $baseName = "SklepInternetowy";
 
 // Tworzymy nowe połączenie
